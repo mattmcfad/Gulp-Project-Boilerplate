@@ -1,0 +1,24 @@
+{
+  "name": "GulpProjectBoilerplate",
+  "version": "0.0.0",
+  "description": "General project boilerplate using Gulp",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmcfadyen91/Gulp-Project-Boilerplate"
+  },
+  "keywords": [
+    "gulp",
+    "project",
+    "boilerplate"
+  ],
+  "author": "@mattmcfad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmcfadyen91/Gulp-Project-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/mmcfadyen91/Gulp-Project-Boilerplate"
+}
