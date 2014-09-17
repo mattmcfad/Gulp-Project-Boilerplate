@@ -4,9 +4,11 @@
 This is the starting point that I use when I build a new project.
 
 ## Technologies
-* Stylus
-* Gulp
 * NPM
+* Gulp
+* CoffeeScript
+* Stylus
+* Jade
 
 ## Getting Started
 1. Install gulp dependencies
