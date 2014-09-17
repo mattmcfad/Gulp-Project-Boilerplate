@@ -1,6 +1,8 @@
 gulp         = require 'gulp'
 gutil        = require 'gulp-util'
 coffee  	   = require 'gulp-coffee'
+concat       = require 'gulp-concat'
+clean        = require 'gulp-clean'
 jade    	   = require 'gulp-jade'
 jshint  	   = require 'gulp-jshint'
 livereload 	 = require 'gulp-livereload'
@@ -21,16 +23,18 @@ gulp.task 'scripts', ->
 
 
 gulp.task 'templates', () ->
-  gutil.log('Compiling Jade', gutil.colors.red('files'))
+  gutil.log(gutil.colors.magenta('Compiling Jade files'))
 	gulp.src('../app/assets/templates/*.jade')
 	  .pipe(jade( pretty: true))
 	  .pipe(gulp.dest('../dist/'))
 
 
 gulp.task 'styles', ->
-  gulp.src parameters.stylesheets_folder + '*.stylus'
+  gutil.log gutil.colors.green 'Compiling STYLUS'
+  gulp.src '../app/assets/stylesheets/*.styl'
   .pipe stylus()
-  .pipe gulp.dest parameters.web_path + '/css'
+  .pipe concat ('main.min.css')
+  .pipe gulp.dest '../dist/css/'
 
 
 gulp.task 'server', ->
@@ -46,6 +50,16 @@ gulp.task 'watch', ->
 gulp.task 'build', ['coffee','scripts', 'templates', 'styles' ] 
 
 gulp.task 'default', ['build','server', 'watch']
+
+
+## TODO
+
+gulp.task 'clean', ->
+  gutil.log gutil.colors.red 'cleaning out the closet'
+  gulp.src '../dist'
+  .pipe clean 
+    read : false
+    force: true
 
 
 
