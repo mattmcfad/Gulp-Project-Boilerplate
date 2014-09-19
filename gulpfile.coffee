@@ -10,7 +10,7 @@ uglify       = require 'gulp-uglify'
 gutil        = require 'gulp-util'
 watch   	   = require 'gulp-watch'
 
-parameters   = require '../config/parameters.coffee'
+param   = require './config/parameters.coffee'
 
 ## ------------------
 ## ----  BUILD  -----
@@ -19,25 +19,25 @@ parameters   = require '../config/parameters.coffee'
 ## --- JavaScript
 ## ------------------
 gulp.task 'scripts', ->
-  gulp.src parameters.js_folder + '*.js'
+  gulp.src param.js_folder
   .pipe jshint()
 
 ## --- Jade Templates
 ## ------------------
 gulp.task 'templates', () ->
-  gutil.log(gutil.colors.magenta('Compiling Jade files'))
-	gulp.src('../app/assets/templates/*.jade')
-	  .pipe(jade( pretty: true))
-	  .pipe(gulp.dest('../dist/'))
+  gutil.log gutil.colors.magenta 'Compiling Jade files'
+	gulp.src param.templates_folder + 'main.jade'
+	.pipe jade pretty: true
+  .pipe gulp.dest param.dist
 
 ## --- Stylesheets
 ## ------------------
 gulp.task 'styles', ->
   gutil.log gutil.colors.green 'Compiling STYLUS'
-  gulp.src '../app/assets/stylesheets/main.styl'
+  gulp.src param.stylesheets_folder
   .pipe stylus()
   .pipe prefix()
-  .pipe gulp.dest '../dist/css/'
+  .pipe gulp.dest param.dist_css
 
 
 
@@ -47,17 +47,17 @@ gulp.task 'styles', ->
 
 ## --- Concat
 ## ------------------
-gulp.task 'concat', ->
-  gulp.src '../app/assets/.css'
-  .pipe concat 'main.min.css'
-  .pipe gulp.dest '../dist/css/'
+# gulp.task 'concat', ->
+#   gulp.src '../app/assets/.css'
+#   .pipe concat 'main.min.css'
+#   .pipe gulp.dest '../dist/css/'
 
 ## --- Uglify
 ## ------------------
 gulp.task 'uglify', ->
-  gulp.src '../dist/js/*.js'
+  gulp.src param.js_folder
   .pipe uglify()
-  .pipe gulp.dest '../dist/js/*.js'
+  .pipe gulp.dest param.dist + '/js/'
 
 
 
@@ -71,23 +71,22 @@ gulp.task 'server', ->
 ## ------------------
 gulp.task 'clean', ->
   gutil.log gutil.colors.red 'cleaning out the closet'
-  gulp.src '../dist'
+  gulp.src './dist/*'
   .pipe clean 
     read : false
-    force: true
 
 ## --- Watch
 ## ------------------
 gulp.task 'watch', ->
 
-  gutil.log gutil.colors.magenta 'watching JS: ' + parameters.js_folder + '*.js'
-  gulp.watch parameters.js_folder           + '*.js',   ['scripts']
+  gutil.log gutil.colors.magenta 'watching JS: ' + param.js_folder
+  gulp.watch param.js_folder,   ['scripts']
   
-  gutil.log gutil.colors.magenta 'watching Jade: ' + parameters.templates_folder + '*.jade'
-  gulp.watch parameters.templates_folder    + '*.jade', ['templates']
+  gutil.log gutil.colors.magenta 'watching Jade: ' + param.templates_folder + '**/*.*'
+  gulp.watch param.templates_folder + '**/*.*', ['templates']
   
-  gutil.log gutil.colors.magenta 'watching Stylus: ' + parameters.stylesheets_folder + '*.styl'
-  gulp.watch parameters.stylesheets_folder  + '*.styl', ['styles'] 
+  gutil.log gutil.colors.magenta 'watching Stylus: ' + param.stylesheets_folder
+  gulp.watch param.assets + '/stylesheets/*.styl', ['styles'] 
 
 
 ## ------------------
