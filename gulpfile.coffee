@@ -26,9 +26,9 @@ gulp.task 'scripts', ->
 ## ------------------
 gulp.task 'templates', () ->
   gutil.log gutil.colors.magenta 'Compiling Jade files'
-	gulp.src param.templates_folder + 'main.jade'
-	.pipe jade pretty: true
-  .pipe gulp.dest param.dist
+	gulp.src param.templates_folder + 'index.jade'
+	  .pipe jade(pretty: true)
+    .pipe gulp.dest param.dist
 
 ## --- Stylesheets
 ## ------------------
@@ -80,10 +80,10 @@ gulp.task 'clean', ->
 gulp.task 'watch', ->
 
   gutil.log gutil.colors.magenta 'watching JS: ' + param.js_folder
-  gulp.watch param.js_folder,   ['scripts']
+  gulp.watch param.js_folder, ['scripts']
   
-  gutil.log gutil.colors.magenta 'watching Jade: ' + param.templates_folder + '**/*.*'
-  gulp.watch param.templates_folder + '**/*.*', ['templates']
+  gutil.log gutil.colors.magenta 'watching Jade: ' + param.templates_folder + '**/*.jade'
+  gulp.watch param.templates_folder + '**/*.jade', ['templates']
   
   gutil.log gutil.colors.magenta 'watching Stylus: ' + param.stylesheets_folder
   gulp.watch param.assets + '/stylesheets/*.styl', ['styles'] 
@@ -94,7 +94,7 @@ gulp.task 'watch', ->
 ## ------------------
 gulp.task 'build', ['clean','scripts', 'templates', 'styles' ]
 
-gulp.task 'dist', ['build','concat','uglify'] 
+gulp.task 'dist', ['build','concat','uglify']
 
 gulp.task 'default', ['build','server', 'watch']
 
